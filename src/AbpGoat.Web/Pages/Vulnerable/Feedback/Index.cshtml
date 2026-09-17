@@ -1,0 +1,32 @@
+@page
+@model AbpGoat.Web.Pages.Vulnerable.Feedback.IndexModel
+@{
+    ViewData["Title"] = "Feedback";
+}
+
+<h2>Feedback</h2>
+
+<form method="post" class="mb-4">
+    <div class="mb-2">
+        <label class="form-label">Name</label>
+        <input asp-for="AuthorName" class="form-control" />
+    </div>
+    <div class="mb-2">
+        <label class="form-label">Message</label>
+        <textarea asp-for="Message" class="form-control" rows="3"></textarea>
+    </div>
+    <button type="submit" class="btn btn-primary">Send</button>
+</form>
+
+<hr />
+
+@foreach (var feedback in Model.Feedbacks)
+{
+    <div class="card mb-2">
+        <div class="card-body">
+            <h5 class="card-title">@feedback.AuthorName</h5>
+            @* VL-002 (CWE-79, stored XSS): the message is rendered without HTML encoding. *@
+            <div class="card-text">@Html.Raw(feedback.Message)</div>
+        </div>
+    </div>
+}

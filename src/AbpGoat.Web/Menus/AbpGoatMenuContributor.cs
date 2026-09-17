@@ -66,6 +66,12 @@ public class AbpGoatMenuContributor : IMenuContributor
                     l["Menu:Authors"],
                     url: "/Authors"
                 ).RequirePermissions(AbpGoatPermissions.Authors.Default)
+            ).AddItem(
+                new ApplicationMenuItem(
+                    "BooksStore.Feedback",
+                    l["Menu:Feedback"],
+                    url: "/Vulnerable/Feedback"
+                )
             )
         );
 

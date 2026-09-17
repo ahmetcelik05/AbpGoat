@@ -47,6 +47,7 @@ public class AbpGoatEntityFrameworkCoreModule : AbpModule
                 /* Remove "includeAllEntities: true" to create
                  * default repositories only for aggregate roots */
             options.AddDefaultRepositories(includeAllEntities: true);
+            options.AddRepository<AbpGoat.Vulnerable.Documents.Document, DocumentSearchRepository>();
         });
 
         if (AbpStudioAnalyzeHelper.IsInAnalyzeMode)

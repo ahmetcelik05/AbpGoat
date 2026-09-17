@@ -1,67 +1,119 @@
 # AbpGoat
 
-## About this solution
+> ## ⚠️ DELIBERATELY VULNERABLE APPLICATION — DO NOT DEPLOY
+>
+> AbpGoat is an **intentionally insecure** ABP (ASP.NET Core) application. It exists only
+> as a practice target for security tooling: static analyzers (SAST), dynamic scanners
+> (DAST), and AI-driven penetration-testing agents.
+>
+> - **Do not** deploy it to a public, shared, or internet-facing environment.
+> - Run it on **localhost only**, ideally inside a disposable VM or container.
+> - The credentials and secrets in this repository are **fake** and exist only so the
+>   application runs locally out of the box.
 
-This is a layered startup solution based on [Domain Driven Design (DDD)](https://abp.io/docs/latest/framework/architecture/domain-driven-design) practises. All the fundamental ABP modules are already installed. Check the [Application Startup Template](https://abp.io/docs/latest/solution-templates/layered-web-application) documentation for more info.
+## What this is
 
-### Pre-requirements
+AbpGoat is a normal-looking, layered ABP application — a small "book store" plus a few
+extra features — into which a catalogue of security defects has been planted on purpose.
+It is the ABP-flavoured equivalent of WebGoat or Juice Shop.
 
-* [.NET10.0+ SDK](https://dotnet.microsoft.com/download/dotnet)
-* [Node v18 or 20](https://nodejs.org/en)
+The flaws are in the **sample application code**, not in the ABP Framework itself. Every
+intentional defect lives under an `AbpGoat.*.Vulnerable` namespace so it stays clearly
+separated from the framework's own code and from the realistic scaffolding around it.
 
-### Configurations
+The defects deliberately span three detection layers:
 
-The solution comes with a default configuration that works out of the box. However, you may consider to change the following configuration before running your solution:
+- **Generic web flaws** — SQL injection, stored XSS, IDOR, path traversal, SSRF,
+  hardcoded secrets, weak crypto, mass assignment.
+- **ABP-specific flaws** — a missing `[Authorize]`, a disabled multi-tenancy data filter,
+  a permission that is declared but never checked, a host-only endpoint reachable by
+  tenants, and an over-provisioned OpenIddict client.
+- **.NET-specific flaws** — a culture-sensitive `ToUpper()` used in an authorization
+  decision (the Turkish "i" problem).
 
-* Check the `ConnectionStrings` in `appsettings.json` files under the `AbpGoat.Web` and `AbpGoat.DbMigrator` projects and change it if you need.
+The full list, with CWE ids, exact locations, an exploit chain, and a scoring sheet for
+comparing tools, is in **[VULNERABILITIES.md](VULNERABILITIES.md)**.
 
-### Before running the application
+## Tech stack
 
-* Run `abp install-libs` command on your solution folder to install client-side package dependencies. This step is automatically done when you create a new solution, if you didn't especially disabled it. However, you should run it yourself if you have first cloned this solution from your source control, or added a new client-side package dependency to your solution.
-* Run `AbpGoat.DbMigrator` to create the initial database. This step is also automatically done when you create a new solution, if you didn't especially disabled it. This should be done in the first run. It is also needed if a new database migration is added to the solution later.
+- .NET 10, ABP Framework, layered (DDD) solution
+- ASP.NET Core MVC / Razor Pages UI (LeptonX Lite theme)
+- Entity Framework Core on PostgreSQL
+- OpenIddict authentication, multi-tenancy enabled
+- File-system BLOB storage
 
-#### Generating a Signing Certificate
+## Running locally
 
-In the production environment, you need to use a production signing certificate. ABP Framework sets up signing and encryption certificates in your application and expects an `openiddict.pfx` file in your application.
+### Prerequisites
 
-To generate a signing certificate, you can use the following command:
+- [.NET 10 SDK](https://dotnet.microsoft.com/download/dotnet)
+- [Node.js 18 or 20](https://nodejs.org/en) (for client-side libraries)
+- A local PostgreSQL instance
+
+### Steps
 
 ```bash
-dotnet dev-certs https -v -ep openiddict.pfx -p fa73fb05-7b12-4a03-918a-36217ddf872f
+# 1. Restore client-side libraries (only needed after a fresh clone).
+abp install-libs
+
+# 2. Check the "Default" connection string in the appsettings.json files under
+#    src/AbpGoat.Web and src/AbpGoat.DbMigrator, and adjust it for your PostgreSQL.
+
+# 3. Create the database schema and seed demo data (tenants, users, documents).
+dotnet run --project src/AbpGoat.DbMigrator
+
+# 4. Run the web application.
+dotnet run --project src/AbpGoat.Web
 ```
 
-> `fa73fb05-7b12-4a03-918a-36217ddf872f` is the password of the certificate, you can change it to any password you want.
+The application listens on `https://localhost:44394` by default.
 
-It is recommended to use **two** RSA certificates, distinct from the certificate(s) used for HTTPS: one for encryption, one for signing.
+## Accounts and seed data
 
-For more information, please refer to: [OpenIddict Certificate Configuration](https://documentation.openiddict.com/configuration/encryption-and-signing-credentials.html#registering-a-certificate-recommended-for-production-ready-scenarios)
+The database migrator seeds a multi-tenant data set so that the ownership and tenant
+isolation flaws are reproducible against real, multi-owner data. All accounts use the
+password `1q2w3E*`.
 
-> Also, see the [Configuring OpenIddict](https://abp.io/docs/latest/Deployment/Configuring-OpenIddict#production-environment) documentation for more information.
+| Context | Users |
+|---------|-------|
+| Host | `admin` (default), `alice`, `bob` |
+| Tenant `tenant-a` | `alice`, `bob` |
+| Tenant `tenant-b` | `alice`, `bob` |
 
-### Solution structure
+`alice` and `bob` are ordinary, non-admin users, each owning a private document. Use them
+to reproduce the IDOR (VL-003) and tenant-isolation (VL-008) findings. To switch tenant at
+login, use the tenant switch on the login screen.
 
-This is a layered monolith application that consists of the following applications:
+## Solution structure
 
-* `AbpGoat.DbMigrator`: A console application which applies the migrations and also seeds the initial data. It is useful on development as well as on production environment.
-* `AbpGoat.Web`: ASP.NET Core MVC / Razor Pages application that is the essential web application of the solution.
+- `src/AbpGoat.Domain` / `AbpGoat.Domain.Shared` — entities, domain services, constants.
+- `src/AbpGoat.Application` / `AbpGoat.Application.Contracts` — application services and DTOs.
+- `src/AbpGoat.EntityFrameworkCore` — EF Core mappings, migrations, custom repositories.
+- `src/AbpGoat.HttpApi` — auto-generated API controllers.
+- `src/AbpGoat.Web` — MVC / Razor Pages host and UI.
+- `src/AbpGoat.DbMigrator` — console app that applies migrations and seeds data.
+- `test/` — application, domain, and EF Core test projects.
 
-#### Test Projects
+Application services under `AbpGoat.Vulnerable.*` are automatically exposed as REST
+endpoints under `/api/app/...`, so DAST and agent-based tools can reach them without any
+extra wiring.
 
-The `test` folder contains the following test projects:
+## Notes
 
-* `AbpGoat.Application.Tests`: Application layer tests.
-* `AbpGoat.Domain.Tests`: Domain layer tests.
-* `AbpGoat.EntityFrameworkCore.Tests`: Entity Framework Core integration tests.
+- **Signing certificate.** OpenIddict expects an `openiddict.pfx` file. A development
+  certificate is generated automatically for local runs. To create one manually:
 
+  ```bash
+  dotnet dev-certs https -v -ep openiddict.pfx -p fa73fb05-7b12-4a03-918a-36217ddf872f
+  ```
 
+- **Adding vulnerabilities.** Keep new intentional defects under an `AbpGoat.*.Vulnerable`
+  namespace, and record each one in [VULNERABILITIES.md](VULNERABILITIES.md) so the ground
+  truth stays complete.
 
-## Deploying the application
+## Disclaimer
 
-Deploying an ABP application follows the same process as deploying any .NET or ASP.NET Core application. However, there are important considerations to keep in mind. For detailed guidance, refer to ABP's [deployment documentation](https://abp.io/docs/latest/Deployment/Index).
-
-### Additional resources
-
-You can see the following resources to learn more about your solution and the ABP Framework:
-
-* [Web Application Development Tutorial](https://abp.io/docs/latest/tutorials/book-store/part-1)
-* [Application Startup Template](https://abp.io/docs/latest/startup-templates/application/index)
+This project is provided for security education, tooling evaluation, and authorized
+testing only. Running it exposes real, exploitable vulnerabilities by design. You are
+responsible for keeping it isolated. Do not use it against systems or networks you do not
+own or are not authorized to test.

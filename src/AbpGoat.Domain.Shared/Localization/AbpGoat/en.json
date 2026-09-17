@@ -45,6 +45,10 @@
     "Permission:Authors.Delete": "Deleting the authors",
     "Menu:Home": "Home",
     "LongWelcomeMessage": "Welcome to the application. This is a startup project based on the ABP framework. For more information visit",
-    "Welcome": "Welcome"
+    "Welcome": "Welcome",
+    "Permission:Documents": "Documents",
+    "Permission:Documents.Create": "Create document",
+    "Permission:Documents.Delete": "Delete document",
+    "Menu:Feedback": "Feedback"
   }
 }

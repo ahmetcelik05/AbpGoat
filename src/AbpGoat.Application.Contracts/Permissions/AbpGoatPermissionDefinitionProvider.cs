@@ -20,6 +20,10 @@ public class AbpGoatPermissionDefinitionProvider : PermissionDefinitionProvider
         authorsPermission.AddChild(AbpGoatPermissions.Authors.Create, L("Permission:Authors.Create"));
         authorsPermission.AddChild(AbpGoatPermissions.Authors.Edit, L("Permission:Authors.Edit"));
         authorsPermission.AddChild(AbpGoatPermissions.Authors.Delete, L("Permission:Authors.Delete"));
+
+        var documentsPermission = myGroup.AddPermission(AbpGoatPermissions.Documents.Default, L("Permission:Documents"));
+        documentsPermission.AddChild(AbpGoatPermissions.Documents.Create, L("Permission:Documents.Create"));
+        documentsPermission.AddChild(AbpGoatPermissions.Documents.Delete, L("Permission:Documents.Delete"));
         //Define your own permissions here. Example:
         //myGroup.AddPermission(AbpGoatPermissions.MyPermission1, L("Permission:MyPermission1"));
     }
