@@ -1,0 +1,118 @@
+{
+  "template": "app",
+  "imports": {
+    "Volo.Abp.LeptonXLiteTheme": {
+      "version": "5.6.0",
+      "isInstalled": true,
+      "creationTime": "09/17/2026 13:00:52 +00:00"
+    },
+    "Volo.Abp.Account": {
+      "version": "10.6.0",
+      "isInstalled": true,
+      "creationTime": "09/17/2026 13:00:52 +00:00"
+    },
+    "Volo.Abp.OpenIddict": {
+      "version": "10.6.0",
+      "isInstalled": true,
+      "creationTime": "09/17/2026 13:00:52 +00:00"
+    },
+    "Volo.Abp.Identity": {
+      "version": "10.6.0",
+      "isInstalled": true,
+      "creationTime": "09/17/2026 13:00:52 +00:00"
+    },
+    "Volo.Abp.TenantManagement": {
+      "version": "10.6.0",
+      "isInstalled": true,
+      "creationTime": "09/17/2026 13:00:52 +00:00"
+    },
+    "Volo.Abp.SettingManagement": {
+      "version": "10.6.0",
+      "isInstalled": true,
+      "creationTime": "09/17/2026 13:00:52 +00:00"
+    },
+    "Volo.Abp.PermissionManagement": {
+      "version": "10.6.0",
+      "isInstalled": true,
+      "creationTime": "09/17/2026 13:00:52 +00:00"
+    },
+    "Volo.Abp.FeatureManagement": {
+      "version": "10.6.0",
+      "isInstalled": true,
+      "creationTime": "09/17/2026 13:00:52 +00:00"
+    },
+    "Volo.Abp.BlobStoring.Database": {
+      "version": "10.6.0",
+      "isInstalled": true,
+      "creationTime": "09/17/2026 13:00:52 +00:00"
+    }
+  },
+  "folders": {
+    "items": {
+      "src": {},
+      "test": {}
+    }
+  },
+  "packages": {
+    "AbpGoat.Application": {
+      "path": "src/AbpGoat.Application/AbpGoat.Application.abppkg",
+      "folder": "src"
+    },
+    "AbpGoat.Application.Tests": {
+      "path": "test/AbpGoat.Application.Tests/AbpGoat.Application.Tests.abppkg",
+      "folder": "test"
+    },
+    "AbpGoat.Domain.Shared": {
+      "path": "src/AbpGoat.Domain.Shared/AbpGoat.Domain.Shared.abppkg",
+      "folder": "src"
+    },
+    "AbpGoat.Application.Contracts": {
+      "path": "src/AbpGoat.Application.Contracts/AbpGoat.Application.Contracts.abppkg",
+      "folder": "src"
+    },
+    "AbpGoat.HttpApi": {
+      "path": "src/AbpGoat.HttpApi/AbpGoat.HttpApi.abppkg",
+      "folder": "src"
+    },
+    "AbpGoat.HttpApi.Client": {
+      "path": "src/AbpGoat.HttpApi.Client/AbpGoat.HttpApi.Client.abppkg",
+      "folder": "src"
+    },
+    "AbpGoat.Web": {
+      "path": "src/AbpGoat.Web/AbpGoat.Web.abppkg",
+      "folder": "src"
+    },
+    "AbpGoat.Web.Tests": {
+      "path": "test/AbpGoat.Web.Tests/AbpGoat.Web.Tests.abppkg",
+      "folder": "test"
+    },
+    "AbpGoat.EntityFrameworkCore.Tests": {
+      "path": "test/AbpGoat.EntityFrameworkCore.Tests/AbpGoat.EntityFrameworkCore.Tests.abppkg",
+      "folder": "test"
+    },
+    "AbpGoat.EntityFrameworkCore": {
+      "path": "src/AbpGoat.EntityFrameworkCore/AbpGoat.EntityFrameworkCore.abppkg",
+      "folder": "src"
+    },
+    "AbpGoat.TestBase": {
+      "path": "test/AbpGoat.TestBase/AbpGoat.TestBase.abppkg",
+      "folder": "test"
+    },
+    "AbpGoat.Domain.Tests": {
+      "path": "test/AbpGoat.Domain.Tests/AbpGoat.Domain.Tests.abppkg",
+      "folder": "test"
+    },
+    "AbpGoat.HttpApi.Client.ConsoleTestApp": {
+      "path": "test/AbpGoat.HttpApi.Client.ConsoleTestApp/AbpGoat.HttpApi.Client.ConsoleTestApp.abppkg",
+      "folder": "test"
+    },
+    "AbpGoat.DbMigrator": {
+      "path": "src/AbpGoat.DbMigrator/AbpGoat.DbMigrator.abppkg",
+      "folder": "src"
+    },
+    "AbpGoat.Domain": {
+      "path": "src/AbpGoat.Domain/AbpGoat.Domain.abppkg",
+      "folder": "src"
+    }
+  }
+}

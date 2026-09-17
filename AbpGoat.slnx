@@ -1,0 +1,24 @@
+<Solution>
+    <Configurations>
+        <Platform Name="Any CPU" />
+    </Configurations>
+    <Folder Name="/src/">
+        <Project Path="src/AbpGoat.Domain/AbpGoat.Domain.csproj" />
+        <Project Path="src/AbpGoat.Application/AbpGoat.Application.csproj" />
+        <Project Path="src/AbpGoat.EntityFrameworkCore/AbpGoat.EntityFrameworkCore.csproj" />
+        <Project Path="src/AbpGoat.Web/AbpGoat.Web.csproj" />
+        <Project Path="src/AbpGoat.Domain.Shared/AbpGoat.Domain.Shared.csproj" />
+        <Project Path="src/AbpGoat.Application.Contracts/AbpGoat.Application.Contracts.csproj" />
+        <Project Path="src/AbpGoat.HttpApi/AbpGoat.HttpApi.csproj" />
+        <Project Path="src/AbpGoat.HttpApi.Client/AbpGoat.HttpApi.Client.csproj" />
+        <Project Path="src/AbpGoat.DbMigrator/AbpGoat.DbMigrator.csproj" />
+    </Folder>
+    <Folder Name="/test/">
+        <Project Path="test/AbpGoat.Application.Tests/AbpGoat.Application.Tests.csproj" />
+        <Project Path="test/AbpGoat.Web.Tests/AbpGoat.Web.Tests.csproj" />
+        <Project Path="test/AbpGoat.EntityFrameworkCore.Tests/AbpGoat.EntityFrameworkCore.Tests.csproj" />
+        <Project Path="test/AbpGoat.TestBase/AbpGoat.TestBase.csproj" />
+        <Project Path="test/AbpGoat.Domain.Tests/AbpGoat.Domain.Tests.csproj" />
+        <Project Path="test/AbpGoat.HttpApi.Client.ConsoleTestApp/AbpGoat.HttpApi.Client.ConsoleTestApp.csproj" />
+    </Folder>
+</Solution>

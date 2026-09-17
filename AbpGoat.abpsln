@@ -1,0 +1,55 @@
+{
+  "id": "dc0e9bac-18b7-447d-9864-811d89c95ebb",
+  "creationTime": "09/17/2026 13:00:52 +00:00",
+  "template": "app",
+  "versions": {
+    "AbpFramework": "10.6.0",
+    "AbpStudio": "3.1.1",
+    "TargetDotnetFramework": "net10.0"
+  },
+  "modules": {
+    "AbpGoat": {
+      "path": "AbpGoat.abpmdl"
+    }
+  },
+  "runProfiles": {
+    "Default": {
+      "path": "etc/abp-studio/run-profiles/Default.abprun.json"
+    }  },
+  "options": {
+    "httpRequests": {
+      "ignoredUrls": [
+      
+      ]
+    }
+  },
+  "creatingStudioConfiguration": {
+    "template": "app",
+    "createdAbpStudioVersion": "3.1.1",
+    "creationTool": "ABP Studio UI",
+    "tiered": "false",
+    "runInstallLibs": "",
+    "useLocalReferences": "false",
+    "multiTenancy": "true",
+    "includeTests": "true",
+    "kubernetesConfiguration": "false",
+    "uiFramework": "mvc",
+    "mobileFramework": "none",
+    "distributedEventBus": "none",
+    "databaseProvider": "ef",
+    "runDbMigrator": "",
+    "databaseManagementSystem": "postgresql",
+    "separateTenantSchema": "false",
+    "createInitialMigration": "",
+    "theme": "leptonx-lite",
+    "themeStyle": "",
+    "themeMenuPlacement": "",
+    "mobileFramework": "none",
+    "publicWebsite": "false",
+    "socialLogin": "false",
+    "sampleCrudPage": "true",
+    "selectedLanguages": ["English", "Turkish", ],
+    "defaultLanguage": "English",
+    "createCommand": "abp new AbpGoat -t app --ui-framework mvc --database-provider ef --database-management-system postgresql --theme leptonx-lite --skip-migration  --skip-migrator  --without-cms-kit --sample-crud-page --dont-run-install-libs --dont-run-bundling --use-open-source-template"
+  }
+}
