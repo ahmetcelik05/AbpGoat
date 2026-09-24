@@ -5,8 +5,7 @@ using Volo.Abp.MultiTenancy;
 namespace AbpGoat.Vulnerable.Documents;
 
 /// <summary>
-/// A user-owned document whose bytes are stored on the file system.
-/// Multi-tenant so that cross-tenant isolation defects (VL-008) are reproducible.
+/// A user-owned document whose bytes are stored on the file system. Multi-tenant.
 /// </summary>
 public class Document : FullAuditedAggregateRoot<Guid>, IMultiTenant
 {

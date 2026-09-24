@@ -2,6 +2,8 @@ using Microsoft.EntityFrameworkCore;
 using Volo.Abp.AuditLogging.EntityFrameworkCore;
 using AbpGoat.Authors;
 using AbpGoat.Books;
+using AbpGoat.Notes;
+using AbpGoat.Orders;
 using AbpGoat.Vulnerable.Documents;
 using AbpGoat.Vulnerable.Feedbacks;
 using Volo.Abp.BackgroundJobs.EntityFrameworkCore;
@@ -38,6 +40,10 @@ public class AbpGoatDbContext :
     public DbSet<Document> Documents { get; set; }
 
     public DbSet<Feedback> Feedbacks { get; set; }
+
+    public DbSet<Note> Notes { get; set; }
+
+    public DbSet<Order> Orders { get; set; }
 
     #region Entities from the modules
 
@@ -124,6 +130,23 @@ public class AbpGoatDbContext :
             b.ConfigureByConvention();
             b.Property(x => x.AuthorName).IsRequired().HasMaxLength(128);
             b.Property(x => x.Message).IsRequired().HasMaxLength(2000);
+        });
+
+        builder.Entity<Note>(b =>
+        {
+            b.ToTable(AbpGoatConsts.DbTablePrefix + "Notes",
+                AbpGoatConsts.DbSchema);
+            b.ConfigureByConvention();
+            b.Property(x => x.Title).IsRequired().HasMaxLength(256);
+            b.Property(x => x.Content).HasMaxLength(4000);
+        });
+
+        builder.Entity<Order>(b =>
+        {
+            b.ToTable(AbpGoatConsts.DbTablePrefix + "Orders",
+                AbpGoatConsts.DbSchema);
+            b.ConfigureByConvention();
+            b.Property(x => x.ProductName).IsRequired().HasMaxLength(256);
         });
 
         /* Configure your own tables/entities inside here */

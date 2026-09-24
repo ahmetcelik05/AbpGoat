@@ -106,10 +106,6 @@ public class OpenIddictDataSeedContributor : OpenIddictDataSeedContributorBase, 
                 consentType: OpenIddictConstants.ConsentTypes.Implicit,
                 displayName: "Swagger Application",
                 secret: null,
-                // VL-011 (CWE-250): this public client (no secret) only needs the
-                // authorization-code flow for the Swagger UI, but is over-provisioned with
-                // the password and client-credentials grants, widening blast radius if the
-                // client is abused. A public client must never hold these grants.
                 grantTypes: new List<string>
                 {
                     OpenIddictConstants.GrantTypes.AuthorizationCode,
@@ -123,6 +119,18 @@ public class OpenIddictDataSeedContributor : OpenIddictDataSeedContributorBase, 
             );
         }
 
-
+        await CreateOrUpdateApplicationAsync(
+            applicationType: OpenIddictConstants.ApplicationTypes.Web,
+            name: "AbpGoat_Integration",
+            type: OpenIddictConstants.ClientTypes.Confidential,
+            consentType: OpenIddictConstants.ConsentTypes.Implicit,
+            displayName: "Integration Service",
+            secret: "1q2w3E*",
+            grantTypes: new List<string>
+            {
+                OpenIddictConstants.GrantTypes.ClientCredentials
+            },
+            scopes: commonScopes
+        );
     }
 }

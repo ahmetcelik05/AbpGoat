@@ -1,0 +1,13 @@
+@page
+@model AbpGoat.Web.Pages.Vulnerable.Notice.IndexModel
+@{
+    ViewData["Title"] = "Notice";
+}
+
+<h2>Notice</h2>
+
+<div class="card">
+    <div class="card-body">
+        @Html.Raw(Model.Notice)
+    </div>
+</div>

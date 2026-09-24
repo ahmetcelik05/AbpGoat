@@ -10,7 +10,7 @@ using Volo.Abp.EntityFrameworkCore;
 namespace AbpGoat.EntityFrameworkCore;
 
 /// <summary>
-/// Custom document repository. Deliberately insecure — see VULNERABILITIES.md (VL-001).
+/// Custom document repository providing title search.
 /// </summary>
 public class DocumentSearchRepository
     : EfCoreRepository<AbpGoatDbContext, Document, Guid>, IDocumentSearchRepository
@@ -20,13 +20,19 @@ public class DocumentSearchRepository
     {
     }
 
-    // VL-001 (CWE-89, SQL injection): the search term is concatenated straight into raw SQL,
-    // so input such as "%'; DROP TABLE ... --" is executed by the database. A parameterised
-    // query (FromSqlInterpolated) or a LINQ Where would be safe.
     public async Task<List<Document>> SearchByTitleAsync(string term)
     {
         var dbSet = await GetDbSetAsync();
         var sql = "SELECT * FROM \"AppDocuments\" WHERE \"Title\" LIKE '%" + term + "%'";
         return await dbSet.FromSqlRaw(sql).ToListAsync();
+    }
+
+    public async Task<List<Document>> SearchByTitleSafeAsync(string term)
+    {
+        var dbSet = await GetDbSetAsync();
+        var pattern = "%" + term + "%";
+        return await dbSet
+            .FromSqlInterpolated($"SELECT * FROM \"AppDocuments\" WHERE \"Title\" LIKE {pattern}")
+            .ToListAsync();
     }
 }

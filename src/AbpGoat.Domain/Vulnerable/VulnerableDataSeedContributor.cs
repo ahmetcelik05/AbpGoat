@@ -14,8 +14,8 @@ using Volo.Abp.TenantManagement;
 namespace AbpGoat.Vulnerable;
 
 /// <summary>
-/// Seeds tenants, non-admin users and documents so the intentional flaws (IDOR VL-003 and
-/// tenant-isolation bypass VL-008) are reproducible against real, multi-owner data.
+/// Seeds tenants, non-admin users and documents so the app runs against realistic,
+/// multi-owner data.
 /// </summary>
 public class VulnerableDataSeedContributor : IDataSeedContributor, ITransientDependency
 {

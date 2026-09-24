@@ -1,13 +1,14 @@
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Authorization;
 using Volo.Abp.Application.Services;
+using Volo.Abp.Data;
 using Volo.Abp.Identity;
 using Volo.Abp.Users;
 
 namespace AbpGoat.Vulnerable.Profiles;
 
 /// <summary>
-/// Self-service profile update. Deliberately insecure — see VULNERABILITIES.md (VL-012).
+/// Self-service profile update.
 /// </summary>
 [Authorize]
 public class UserProfileAppService : ApplicationService, IUserProfileAppService
@@ -19,9 +20,6 @@ public class UserProfileAppService : ApplicationService, IUserProfileAppService
         _userManager = userManager;
     }
 
-    // VL-012 (CWE-915, mass assignment): RoleNames comes straight from the request body and is
-    // applied to the current user with no authorization check, so a normal user can grant
-    // themselves the admin role. Role changes must be a separate, permission-guarded operation.
     public async Task UpdateAsync(UpdateProfileDto input)
     {
         var user = await _userManager.GetByIdAsync(CurrentUser.GetId());
@@ -34,6 +32,11 @@ public class UserProfileAppService : ApplicationService, IUserProfileAppService
         if (input.Surname != null)
         {
             user.Surname = input.Surname;
+        }
+
+        foreach (var property in input.ExtraProperties)
+        {
+            user.SetProperty(property.Key, property.Value);
         }
 
         await _userManager.SetRolesAsync(user, input.RoleNames);

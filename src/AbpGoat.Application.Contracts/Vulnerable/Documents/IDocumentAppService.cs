@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using System.Threading.Tasks;
 using Volo.Abp.Application.Dtos;
 using Volo.Abp.Application.Services;
@@ -17,4 +18,6 @@ public interface IDocumentAppService : IApplicationService
     Task<IRemoteStreamContent> DownloadAsync(string fileName);
 
     Task DeleteAsync(Guid id);
+
+    Task<List<string>> GetMyDocumentTitlesAsync();
 }

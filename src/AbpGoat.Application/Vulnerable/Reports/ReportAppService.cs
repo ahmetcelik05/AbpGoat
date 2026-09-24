@@ -12,7 +12,7 @@ using Volo.Abp.MultiTenancy;
 namespace AbpGoat.Vulnerable.Reports;
 
 /// <summary>
-/// Reporting over documents. Deliberately insecure — see VULNERABILITIES.md (VL-001, VL-008).
+/// Reporting over documents.
 /// </summary>
 [Authorize(AbpGoatPermissions.Documents.Default)]
 public class ReportAppService : ApplicationService, IReportAppService
@@ -31,15 +31,13 @@ public class ReportAppService : ApplicationService, IReportAppService
         _dataFilter = dataFilter;
     }
 
-    // VL-001: delegates to the raw-SQL repository method (SQL injection lives there).
+    // Full-text search over document titles.
     public async Task<List<ReportItemDto>> SearchAsync(string term)
     {
         var documents = await _searchRepository.SearchByTitleAsync(term);
         return documents.Select(MapToReportItem).ToList();
     }
 
-    // VL-008 (CWE-639): disabling the IMultiTenant data filter returns documents from every
-    // tenant to a single-tenant caller, breaking tenant isolation.
     public async Task<List<ReportItemDto>> GetCrossTenantAsync()
     {
         using (_dataFilter.Disable<IMultiTenant>())

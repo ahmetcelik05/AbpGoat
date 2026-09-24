@@ -1,0 +1,11 @@
+@page
+@model AbpGoat.Web.Pages.Vulnerable.Danger.IndexModel
+@{
+    ViewData["Title"] = "Danger Zone";
+}
+
+<h2>Danger Zone</h2>
+
+<form method="post" asp-page-handler="Purge">
+    <button type="submit" class="btn btn-danger">Purge all documents</button>
+</form>

@@ -11,4 +11,6 @@ public interface IAdminToolsAppService : IApplicationService
     Task<List<TenantInfoDto>> ListAllTenantsAsync();
 
     Task<bool> IsPrivilegedAsync(string role);
+
+    Task<bool> IsPrivilegedSafeAsync(string role);
 }

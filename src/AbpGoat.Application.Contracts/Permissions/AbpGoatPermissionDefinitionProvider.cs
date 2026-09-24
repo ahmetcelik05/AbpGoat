@@ -24,6 +24,11 @@ public class AbpGoatPermissionDefinitionProvider : PermissionDefinitionProvider
         var documentsPermission = myGroup.AddPermission(AbpGoatPermissions.Documents.Default, L("Permission:Documents"));
         documentsPermission.AddChild(AbpGoatPermissions.Documents.Create, L("Permission:Documents.Create"));
         documentsPermission.AddChild(AbpGoatPermissions.Documents.Delete, L("Permission:Documents.Delete"));
+
+        var notesPermission = myGroup.AddPermission(AbpGoatPermissions.Notes.Default, L("Permission:Notes"));
+        notesPermission.AddChild(AbpGoatPermissions.Notes.Create, L("Permission:Notes.Create"));
+        notesPermission.AddChild(AbpGoatPermissions.Notes.Edit, L("Permission:Notes.Edit"));
+        notesPermission.AddChild(AbpGoatPermissions.Notes.Delete, L("Permission:Notes.Delete"));
         //Define your own permissions here. Example:
         //myGroup.AddPermission(AbpGoatPermissions.MyPermission1, L("Permission:MyPermission1"));
     }

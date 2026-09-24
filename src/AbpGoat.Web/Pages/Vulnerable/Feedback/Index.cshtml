@@ -25,7 +25,6 @@
     <div class="card mb-2">
         <div class="card-body">
             <h5 class="card-title">@feedback.AuthorName</h5>
-            @* VL-002 (CWE-79, stored XSS): the message is rendered without HTML encoding. *@
             <div class="card-text">@Html.Raw(feedback.Message)</div>
         </div>
     </div>

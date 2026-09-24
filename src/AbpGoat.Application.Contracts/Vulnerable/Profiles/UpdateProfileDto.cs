@@ -8,6 +8,7 @@ public class UpdateProfileDto
 
     public string? Surname { get; set; }
 
-    /// <summary>Role names applied to the current user (intentionally attacker-controllable).</summary>
     public List<string> RoleNames { get; set; } = new();
+
+    public Dictionary<string, object> ExtraProperties { get; set; } = new();
 }

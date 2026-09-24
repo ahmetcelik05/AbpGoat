@@ -4,8 +4,7 @@ using Volo.Abp.Domain.Entities.Auditing;
 namespace AbpGoat.Vulnerable.Feedbacks;
 
 /// <summary>
-/// A public feedback message. Deliberately insecure — see VULNERABILITIES.md (VL-002).
-/// The message is stored verbatim and later rendered unescaped, enabling stored XSS.
+/// A public feedback message submitted by a visitor.
 /// </summary>
 public class Feedback : CreationAuditedAggregateRoot<Guid>
 {

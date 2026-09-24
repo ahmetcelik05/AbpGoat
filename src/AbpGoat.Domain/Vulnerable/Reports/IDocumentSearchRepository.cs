@@ -9,4 +9,6 @@ namespace AbpGoat.Vulnerable.Reports;
 public interface IDocumentSearchRepository : IRepository<Document, Guid>
 {
     Task<List<Document>> SearchByTitleAsync(string term);
+
+    Task<List<Document>> SearchByTitleSafeAsync(string term);
 }
